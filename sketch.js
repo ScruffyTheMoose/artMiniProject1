@@ -9,6 +9,11 @@ function setup() {
     x_quart = windowWidth / 4;
     y_quart = windowHeight / 4;
 
+    // origin of triangles
+    // this is redundant but will be kept for clarity
+    x_origin = x_mid + x_quart;
+    y_origin = y_quart;
+
 }
 
 function rand(min, max) {
@@ -16,51 +21,85 @@ function rand(min, max) {
 }
 
 // assigning random initial color values to red, green, and blue respectively
-let r = rand(0, 80);
-let g = rand(81, 150);
-let b = rand(151, 255);
+let r = rand(100, 255);
+let g = rand(86, 171);
+let b = rand(172, 255);
 
 // these are the values that will be varied in each respective component
-let back_base = r + 50;
-let arc_base = g - 60;
-let tri_base = b - 25;
+let zero_base = r;
+let one_base = g;
+let two_base = r;
+let three_base = r;
+let four_base = g;
+let back_base = b;
 
 // rate at which color value will be incremented/decremented
+let zero_speed = 1;
+let one_speed = 1;
+let two_speed = 1;
+let three_speed = 1;
+let four_speed = 1;
 let back_speed = 1;
-let arc_speed = 1;
-let tri_speed = 1;
+
 
 function draw() {
     // to be made dynamic
-    background(back_base, g, b);
+    background(0);
 
-    // rendering center line to split the canvas
-    fill(0);
-    line(x_mid, 0, x_mid, windowHeight);
+    /**
+     * Triangles will be rendered from left to right in a ray-type polygon spanning the canvas
+     */
 
-    // rendering arc to right side of centerline
-    fill(r, arc_base, b);
-    arc(x_mid, y_mid, x_quart, y_mid, -HALF_PI, HALF_PI);
+    // triangle 0
+    fill(rand(100, 255), 0, 0); // roughly brown
+    triangle(x_origin, y_origin, 0.5 * x_quart, 1.5 * y_quart, x_quart, 3 * y_quart);
 
-    // rendering triangle to left side of centerline
-    fill(r, g, tri_base);
-    triangle(x_mid, y_quart, x_mid, 3 * y_quart, x_quart, 3 * y_quart);
+    // triangle 1
+    fill(0, rand(100, 255), 0); // roughly orange
+    triangle(x_origin, y_origin, x_quart, 3 * y_quart, 2 * x_quart, 3.5 * y_quart);
 
-    back_base += back_speed;
-    arc_base += arc_speed;
-    tri_base += tri_speed;
+    // triangle 2
+    fill(0, 0, rand(100, 255)); // roughly yellow
+    triangle(x_origin, y_origin, 2 * x_quart, 3.5 * y_quart, 2.5 * x_quart, 3.6 * y_quart);
 
-    // incrementing or decrementing colors
-    if (back_base >= 255 || back_base <= 0) {
-        back_speed = back_speed * (-1);
-    }
+    // triangle 3
+    fill(rand(100, 255), 0, 0);
+    triangle(x_origin, y_origin, 2.5 * x_quart, 3.6 * y_quart, 3.2 * x_quart, 3.6 * y_quart);
 
-    if (arc_base >= 255 || arc_base <= 0) {
-        arc_speed = arc_speed * (-1);
-    }
+    // triangle 4
+    fill(97, 85, rand(100, 180));
+    triangle(x_origin, y_origin, 3.2 * x_quart, 3.6 * y_quart, 3.8 * x_quart, 2.9 * y_quart);
 
-    if (tri_base >= 255 || tri_base <= 0) {
-        tri_speed = tri_speed * (-1);
-    }
+    // // incrementing/decrementing color levels
+    // zero_base += zero_speed;
+    // one_base += one_speed;
+    // two_base += two_speed;
+    // three_base += three_speed;
+    // four_base += four_speed;
+    // back_base += back_speed;
 
+    // // incrementing or decrementing colors
+    // if (zero_base >= 255 || zero_base <= 100) {
+    //     zero_speed = zero_speed * (-1);
+    // }
+
+    // if (one_base >= 255 || one_base <= 0) {
+    //     one_speed = one_speed * (-1);
+    // }
+
+    // if (two_base >= 255 || two_base <= 0) {
+    //     two_speed = two_speed * (-1);
+    // }
+
+    // if (three_base >= 255 || three_base <= 0) {
+    //     three_speed = three_speed * (-1);
+    // }
+
+    // if (four_base >= 255 || four_base <= 0) {
+    //     four_speed = four_speed * (-1);
+    // }
+
+    // if (back_base >= 255 || back_base <= 0) {
+    //     back_speed = back_speed * (-1);
+    // }
 }
