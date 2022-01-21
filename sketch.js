@@ -1,39 +1,69 @@
+/**
+ * The setup() method will set the dimensions for the canvas and initialize all dimension variables for rendering.
+ */
 function setup() {
-    createCanvas(windowWidth, windowHeight);
 
-    // midpoints of x and y axis
-    x_mid = windowWidth / 2;
-    y_mid = windowHeight / 2;
+    /**
+     * Setting window width and height to match to have universally square canvas.
+     * The form of the drawn cubes is dependent on the dimensions of the canvas so this is necessary.
+     */
+    WIDTH = windowHeight
+    HEIGHT = windowHeight
+    createCanvas(WIDTH, HEIGHT);
 
-    // quarters of x and y axis
-    x_quart = windowWidth / 4;
-    y_quart = windowHeight / 4;
+    // used to shift second cube down and left
+    // larger than true quarter so that there is a gap between objects
+    x_quart = WIDTH / 3.5;
+    y_quart = HEIGHT / 3.5;
 
-    // origin of triangles
-    // this is redundant but will be kept for clarity
-    x_origin = x_mid + x_quart;
-    y_origin = y_quart;
-
+    // one-eight the canvas dimension which is used to plot corners of cubes
+    x_oct = WIDTH / 8;
+    y_oct = HEIGHT / 8;
 }
 
-function rand(min, max) {
-    return Math.random() * (max - min) + min;
-}
-
+/**
+ * The draw() method will build the canvas and render all objects given within the code block.
+ */
 function draw() {
-    // to be made dynamic
-    background(0);
 
-    // all shapes have corners plotted clockwise from top-right
+    // setting background color
+    background(0, 100, 100);
 
-    fill(255, 0, 0);
-    rect(x_mid, y_quart, y_quart, y_mid);
+    /**
+     * Top Left Cube is drawn in this section using three 4-cornered polygons.
+     * Face plotting order -> (TL, TR, BR, BL)
+     * Top plotting order -> (BL, BR, TR, TL)
+     * Side plotting order -> (BL, TL, TR, BR)
+     */
 
-    fill(0, 255, 0);
-    quad(x_mid, y_quart, x_mid, 3 * y_quart, 0.9 * x_mid, 2.9 * y_quart, 0.9 * x_mid, 1.1 * y_quart);
+    // face
+    fill(200, 0, 100);
+    quad(x_oct, y_oct, 3 * x_oct, y_oct, 3 * x_oct, 3 * y_oct, x_oct, 3 * y_oct);
 
-    fill(0, 0, 255);
-    quad(0.9 * x_mid, 1.1 * y_quart, 0.9 * x_mid, 2.9 * y_quart, )
+    // top
+    fill(100, 50, 100);
+    quad(x_oct, y_oct, 3 * x_oct, y_oct, 4 * x_oct, y_oct / 2, 2 * x_oct, y_oct / 2);
 
+    // bottom
+    fill(150, 100, 100);
+    quad(3 * x_oct, 3 * y_oct, 3 * x_oct, y_oct, 4 * x_oct, y_oct / 2, 4 * x_oct, 2.5 * y_oct);
+
+
+    /**
+     * Bottom Right Cube is drawn in this section using identicle coordinates as TLC but shifted down and right.
+     * And yeah this block of code is pretty unreadable but it was very annoying to set up so I'm leaving it.
+     * Face plotting order -> (TL, TR, BR, BL)
+     * Top plotting order -> (BL, BR, TR, TL)
+     * Side plotting order -> (BL, TL, TR, BR)
+     */
+
+    fill(50, 100, 100);
+    quad(x_oct + x_quart, y_oct + y_quart, 3 * x_oct + x_quart, y_oct + y_quart, 3 * x_oct + x_quart, 3 * y_oct + y_quart, x_oct + x_quart, 3 * y_oct + y_quart);
+
+    fill(100, 100, 50);
+    quad(x_oct + x_quart, y_oct + y_quart, 3 * x_oct + x_quart, y_oct + y_quart, 4 * x_oct + x_quart, y_oct / 2 + y_quart, 2 * x_oct + x_quart, y_oct / 2 + y_quart);
+
+    fill(200, 100, 0);
+    quad(3 * x_oct + x_quart, 3 * y_oct + y_quart, 3 * x_oct + x_quart, y_oct + y_quart, 4 * x_oct + x_quart, y_oct / 2 + y_quart, 4 * x_oct + x_quart, 2.5 * y_oct + y_quart);
 
 }
